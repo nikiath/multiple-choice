@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiple Choice Game</title>
+    <style>
+        body {
+            background-color: black;
+            color: pink;
+            font-family: Arial, sans-serif;
+            font-size: 20px;
+        }
+        .question {
+            margin-bottom: 10px;
+        }
+        .answers {
+            margin-bottom: 20px;
+            color: lightblue;
+        }
+        .result {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Επιλέξτε τη σωστή απάντηση:</h1>
+
+    <div class="question" id="q1">
+        <p>1. Από πού είναι η γυναίκα;</p>
+        <div class="answers">
+            <label><input type="radio" name="q1" value="a"> α) Από την Πάτρα</label><br>
+            <label><input type="radio" name="q1" value="b"> β) Από την Κρήτη</label><br>
+            <label><input type="radio" name="q1" value="c"> γ) Από την Αθήνα</label>
+        </div>
+    </div>
+
+    <div class="question" id="q2">
+        <p>2. Τι δουλειά κάνει η γυναίκα;</p>
+        <div class="answers">
+            <label><input type="radio" name="q2" value="a"> α) Είναι διευθύντρια</label><br>
+            <label><input type="radio" name="q2" value="b"> β) Είναι καθηγήτρια ελληνικών</label><br>
+            <label><input type="radio" name="q2" value="c"> γ) Δεν δουλεύει</label>
+        </div>
+    </div>
+
+    <div class="question" id="q3">
+        <p>3. Ποιος ζει στην Αθήνα εδώ και αρκετά χρόνια;</p>
+        <div class="answers">
+            <label><input type="radio" name="q3" value="a"> α) Η γυναίκα</label><br>
+            <label><input type="radio" name="q3" value="b"> β) Ο άντρας</label><br>
+            <label><input type="radio" name="q3" value="c"> γ) Και οι δύο</label>
+        </div>
+    </div>
+
+    <div class="question" id="q4">
+        <p>4. Ποιος ζητάει τον αριθμό τηλεφώνου;</p>
+        <div class="answers">
+            <label><input type="radio" name="q4" value="a"> α) Η γυναίκα</label><br>
+            <label><input type="radio" name="q4" value="b"> β) Ο άντρας</label><br>
+            <label><input type="radio" name="q4" value="c"> γ) Και οι δύο</label>
+        </div>
+    </div>
+
+    <div class="question" id="q5">
+        <p>5. Ποια είναι η αντίδραση της γυναίκας για τον καφέ;</p>
+        <div class="answers">
+            <label><input type="radio" name="q5" value="a"> α) Λέει όχι</label><br>
+            <label><input type="radio" name="q5" value="b"> β) Λέει ίσως</label><br>
+            <label><input type="radio" name="q5" value="c"> γ) Λέει ναι</label>
+        </div>
+    </div>
+
+    <button onclick="checkAnswers()">Υποβολή</button>
+
+    <div id="results"></div>
+
+    <script>
+        const correctAnswers = {
+            q1: 'a',
+            q2: 'b',
+            q3: 'b',
+            q4: 'b',
+            q5: 'c'
+        };
+
+        function checkAnswers() {
+            let results = '';
+            let score = 0;
+            const totalQuestions = Object.keys(correctAnswers).length;
+
+            for (const [question, correctAnswer] of Object.entries(correctAnswers)) {
+                const userAnswer = document.querySelector(`input[name="${question}"]:checked`);
+                if (userAnswer) {
+                    if (userAnswer.value === correctAnswer) {
+                        results += `<p>${document.querySelector(`#${question} p`).innerText} <span style="color: green;">✔️</span></p>`;
+                        score++;
+                    } else {
+                        results += `<p>${document.querySelector(`#${question} p`).innerText} <span style="color: red;">❌</span> (Η σωστή απάντηση είναι: ${correctAnswer})</p>`;
+                    }
+                } else {
+                    results += `<p>${document.querySelector(`#${question} p`).innerText} <span style="color: red;">❌</span> (Η σωστή απάντηση είναι: ${correctAnswer})</p>`;
+                }
+            }
+
+            results += `<p>Σκορ: ${score}/${totalQuestions}</p>`;
+            document.getElementById('results').innerHTML = results;
+        }
+    </script>
+</body>
+</html>
